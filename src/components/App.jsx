@@ -14,10 +14,12 @@ class App extends React.Component {
       query: "pomeranian fail"
     };
 
+    this.liveSearch = _.debounce(this.getVideos, 500);
+
     this.whenClick = this.whenClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.getVideos = this.getVideos.bind(this);
+    // this.getVideos = this.getVideos.bind(this);
   }
 
   componentDidMount() {
@@ -35,8 +37,7 @@ class App extends React.Component {
       query: event.target.value
     });
 
-    var liveSearch = _.debounce(this.getVideos, 500, true);
-    liveSearch();
+    this.liveSearch();
   }
 
   handleSubmit() {
@@ -44,6 +45,7 @@ class App extends React.Component {
   }
 
   getVideos() {
+    console.log(this.state.query);
     var options = {
       key: YOUTUBE_API_KEY,
       query: this.state.query,
